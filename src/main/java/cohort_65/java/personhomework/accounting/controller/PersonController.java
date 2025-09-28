@@ -2,6 +2,7 @@ package cohort_65.java.personhomework.accounting.controller;
 
 
 import cohort_65.java.personhomework.accounting.dao.PersonRepository;
+import cohort_65.java.personhomework.accounting.dto.AdressDto;
 import cohort_65.java.personhomework.accounting.dto.PersonDto;
 import cohort_65.java.personhomework.accounting.model.Person;
 import cohort_65.java.personhomework.accounting.service.PersonService;
@@ -64,4 +65,11 @@ public class PersonController {
         List<PersonDto> persons = personService.findByName(name);
         return ResponseEntity.ok(persons);
     }
+
+    @PutMapping("/{id}/adress")
+    public ResponseEntity<PersonDto> updateAdress(@PathVariable Long id, @RequestBody AdressDto adressDto) {
+        PersonDto updated = personService.updateAdress(id, adressDto);
+        return ResponseEntity.ok(updated);
+    }
+
 }

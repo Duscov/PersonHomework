@@ -1,6 +1,7 @@
 package cohort_65.java.personhomework.accounting.service;
 
 
+import cohort_65.java.personhomework.accounting.dto.AdressDto;
 import cohort_65.java.personhomework.accounting.dto.PersonDto;
 import cohort_65.java.personhomework.accounting.model.Person;
 
@@ -18,4 +19,6 @@ public interface PersonService {
     PersonDto updateName(Long id, String newName);
 
     List<PersonDto> findByName(String name);
+
+    PersonDto updateAdress (Long id, AdressDto adressDto);
 }

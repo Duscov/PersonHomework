@@ -1,9 +1,12 @@
 package cohort_65.java.personhomework.accounting.service;
 
+import cohort_65.java.personhomework.accounting.dto.AdressDto;
 import cohort_65.java.personhomework.accounting.dto.PersonDto;
+import cohort_65.java.personhomework.accounting.dto.exceptions.InvalidAdressException;
 import cohort_65.java.personhomework.accounting.dto.exceptions.InvalidPersonNameException;
 import cohort_65.java.personhomework.accounting.dto.exceptions.PersonExistsException;
 import cohort_65.java.personhomework.accounting.dto.exceptions.PersonNotFoundException;
+import cohort_65.java.personhomework.accounting.model.Adress;
 import cohort_65.java.personhomework.accounting.model.Person;
 import cohort_65.java.personhomework.accounting.dao.PersonRepository;
 import lombok.RequiredArgsConstructor;
@@ -91,4 +94,21 @@ public class PersonServiceImpl implements PersonService {
                 .map(person -> modelMapper.map(person, PersonDto.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public PersonDto updateAdress(Long id, AdressDto adressDto) {
+        if (adressDto == null ||
+                adressDto.getCity() == null || adressDto.getCity().trim().isEmpty() ||
+                adressDto.getStreet() == null || adressDto.getStreet().trim().isEmpty() ||
+                adressDto.getBuilding() == null || adressDto.getBuilding().trim().isEmpty()) {
+            throw new InvalidAdressException("Поля city, street, building не должны быть пустыми!");
+        }
+        Person person = personRepository.findById(id)
+                .orElseThrow(PersonNotFoundException::new);
+
+        person.setAdress(modelMapper.map(adressDto, Adress.class));
+        personRepository.save(person);
+        return modelMapper.map(person, PersonDto.class);
+    }
+
 }
