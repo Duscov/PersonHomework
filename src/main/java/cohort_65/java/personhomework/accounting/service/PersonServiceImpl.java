@@ -1,7 +1,8 @@
 package cohort_65.java.personhomework.accounting.service;
 
 import cohort_65.java.personhomework.accounting.dto.PersonDto;
-import cohort_65.java.personhomework.accounting.dto.exceptions.UserExistsException;
+import cohort_65.java.personhomework.accounting.dto.exceptions.PersonExistsException;
+import cohort_65.java.personhomework.accounting.dto.exceptions.PersonNotFoundException;
 import cohort_65.java.personhomework.accounting.model.Person;
 import cohort_65.java.personhomework.accounting.dao.PersonRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +24,17 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person addPerson(PersonDto personDto) {
         if (personRepository.existsById(personDto.getId())) {
-            throw new UserExistsException();
-        }
-        // Маппинг PersonDto → Person через ModelMapper
+            throw new PersonExistsException();
+        }       // Маппинг PersonDto → Person через ModelMapper
         Person person = modelMapper.map(personDto, Person.class);
         person =  personRepository.save(person);
-        // id в Person будет взят из personDto, adress — из personDto.getAdress
         return modelMapper.map(person, Person.class);
+    }
+
+    @Override
+    public PersonDto findPerson(Long id) {
+        Person person = personRepository.findById(id)
+                .orElseThrow(PersonNotFoundException::new);
+        return modelMapper.map(person, PersonDto.class);
     }
 }

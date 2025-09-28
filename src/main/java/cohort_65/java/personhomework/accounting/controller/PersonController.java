@@ -27,4 +27,10 @@ public class PersonController {
         Person saved = personService.addPerson(personDto);
         return ResponseEntity.ok(saved);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PersonDto> findPerson(@PathVariable Long id) {
+        PersonDto personDto = personService.findPerson(id);
+        return ResponseEntity.ok(personDto);
+    }
 }
