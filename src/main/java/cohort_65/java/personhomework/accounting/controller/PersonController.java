@@ -41,4 +41,12 @@ public class PersonController {
         List<PersonDto> persons = personService.findByCity(city);
         return ResponseEntity.ok(persons);
     }
+
+    @GetMapping("/ages")
+    public ResponseEntity<List<PersonDto>> findByAges(
+            @RequestParam int from,
+            @RequestParam int to) {
+        List<PersonDto> persons = personService.findByAges(from, to);
+        return ResponseEntity.ok(persons);
+    }
 }

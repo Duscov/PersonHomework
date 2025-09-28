@@ -12,4 +12,6 @@ public interface PersonService {
     PersonDto findPerson(Long id);
 
     List<PersonDto> findByCity(String city);
+
+    List<PersonDto> findByAges(int fromAge, int toAge);
 }

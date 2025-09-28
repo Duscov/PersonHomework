@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,5 +51,20 @@ public class PersonServiceImpl implements PersonService {
         return people.stream()
                 .map(person -> modelMapper.map(person, PersonDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PersonDto> findByAges(int fromAge, int toAge) {
+        LocalDate now = LocalDate.now();
+        LocalDate maxBirthDate = now.minusYears(fromAge);
+        LocalDate minBirthDate = now.minusYears(toAge);
+
+        List<Person> people = personRepository.findByBirthDateBetween(minBirthDate, maxBirthDate);
+        if (people.isEmpty()) {
+            throw new PersonNotFoundException();}
+        return people.stream()
+                    .map(person -> modelMapper.map(person, PersonDto.class))
+                    .collect(Collectors.toList());
+
     }
 }
