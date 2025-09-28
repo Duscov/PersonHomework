@@ -111,4 +111,17 @@ public class PersonServiceImpl implements PersonService {
         return modelMapper.map(person, PersonDto.class);
     }
 
+    @Override
+    public PersonDto deletePerson(Long id) {
+        Person person = personRepository.findById(id)
+                .orElseThrow(PersonNotFoundException::new);
+
+        PersonDto deletedPersonDto = modelMapper.map(person, PersonDto.class);
+        personRepository.delete(person);
+
+        return deletedPersonDto;
+    }
+
+
+
 }

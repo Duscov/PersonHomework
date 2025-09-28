@@ -72,4 +72,9 @@ public class PersonController {
         return ResponseEntity.ok(updated);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PersonDto> deletePerson(@PathVariable Long id) {
+        PersonDto deleted = personService.deletePerson(id);
+        return ResponseEntity.ok(deleted);
+    }
 }

@@ -21,4 +21,6 @@ public interface PersonService {
     List<PersonDto> findByName(String name);
 
     PersonDto updateAdress (Long id, AdressDto adressDto);
+
+    PersonDto deletePerson(Long id);
 }
