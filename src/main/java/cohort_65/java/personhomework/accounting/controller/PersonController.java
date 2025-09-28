@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 /*REST-контроллер для управления сущностями Person. Внедряет PersonRepository через конструктор.*/
 @RestController
 @RequestMapping("/persons")
@@ -32,5 +34,11 @@ public class PersonController {
     public ResponseEntity<PersonDto> findPerson(@PathVariable Long id) {
         PersonDto personDto = personService.findPerson(id);
         return ResponseEntity.ok(personDto);
+    }
+
+    @GetMapping("/city/{city}")
+    public ResponseEntity<List<PersonDto>> findByCity(@PathVariable String city) {
+        List<PersonDto> persons = personService.findByCity(city);
+        return ResponseEntity.ok(persons);
     }
 }

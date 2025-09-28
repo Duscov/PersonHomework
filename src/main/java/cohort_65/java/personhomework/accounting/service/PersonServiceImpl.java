@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Реализация сервисного слоя для работы с Person.
  * Использует ModelMapper для преобразования DTO в Entity.
@@ -36,5 +39,16 @@ public class PersonServiceImpl implements PersonService {
         Person person = personRepository.findById(id)
                 .orElseThrow(PersonNotFoundException::new);
         return modelMapper.map(person, PersonDto.class);
+    }
+
+    @Override
+    public List<PersonDto> findByCity(String city) {
+        List<Person> people = personRepository.findByAdress_City(city);
+        if (people.isEmpty()) {
+            throw new PersonNotFoundException();
+        }
+        return people.stream()
+                .map(person -> modelMapper.map(person, PersonDto.class))
+                .collect(Collectors.toList());
     }
 }
