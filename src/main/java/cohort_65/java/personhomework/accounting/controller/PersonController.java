@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /*REST-контроллер для управления сущностями Person. Внедряет PersonRepository через конструктор.*/
 @RestController
@@ -48,5 +49,13 @@ public class PersonController {
             @RequestParam int to) {
         List<PersonDto> persons = personService.findByAges(from, to);
         return ResponseEntity.ok(persons);
+    }
+
+    @PutMapping("/{id}/{name}")
+    public ResponseEntity<PersonDto> updateName(
+            @PathVariable Long id,
+            @PathVariable String name) {
+        PersonDto updated = personService.updateName(id, name);
+        return ResponseEntity.ok(updated);
     }
 }

@@ -1,6 +1,7 @@
 package cohort_65.java.personhomework.accounting.service;
 
 import cohort_65.java.personhomework.accounting.dto.PersonDto;
+import cohort_65.java.personhomework.accounting.dto.exceptions.InvalidPersonNameException;
 import cohort_65.java.personhomework.accounting.dto.exceptions.PersonExistsException;
 import cohort_65.java.personhomework.accounting.dto.exceptions.PersonNotFoundException;
 import cohort_65.java.personhomework.accounting.model.Person;
@@ -66,5 +67,17 @@ public class PersonServiceImpl implements PersonService {
                     .map(person -> modelMapper.map(person, PersonDto.class))
                     .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public PersonDto updateName(Long id, String newName) {
+        if (newName == null || newName.trim().isEmpty()) {
+            throw new InvalidPersonNameException("Имя не может быть пустым!");
+        }
+        Person person = personRepository.findById(id)
+                .orElseThrow(PersonNotFoundException::new);
+        person.setName(newName);
+        personRepository.save(person);
+        return modelMapper.map(person, PersonDto.class);
     }
 }
