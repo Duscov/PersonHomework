@@ -58,4 +58,10 @@ public class PersonController {
         PersonDto updated = personService.updateName(id, name);
         return ResponseEntity.ok(updated);
     }
+
+    @GetMapping("/byname/{name}")
+    public ResponseEntity<List<PersonDto>> findByName(@PathVariable String name) {
+        List<PersonDto> persons = personService.findByName(name);
+        return ResponseEntity.ok(persons);
+    }
 }

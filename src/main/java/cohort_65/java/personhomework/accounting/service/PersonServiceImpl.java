@@ -80,4 +80,15 @@ public class PersonServiceImpl implements PersonService {
         personRepository.save(person);
         return modelMapper.map(person, PersonDto.class);
     }
+
+    @Override
+    public List<PersonDto> findByName (String name) {
+        List<Person> people = personRepository.findByName(name);
+        if (people.isEmpty()) {
+            throw new PersonNotFoundException();
+        }
+        return people.stream()
+                .map(person -> modelMapper.map(person, PersonDto.class))
+                .collect(Collectors.toList());
+    }
 }
