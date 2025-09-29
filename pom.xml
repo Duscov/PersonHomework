@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cohort_65.java</groupId>
-    <artifactId>PersonHomeWork</artifactId>
+    <artifactId>PersonService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>PersonHomeWork</name>
     <description>PersonHomeWork</description>

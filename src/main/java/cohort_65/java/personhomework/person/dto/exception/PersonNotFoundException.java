@@ -1,4 +1,4 @@
-package cohort_65.java.personhomework.accounting.dto.exceptions;
+package cohort_65.java.personhomework.person.dto.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

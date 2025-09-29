@@ -10,9 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * - @ComponentScan: автоматически сканирует пакеты для поиска компонентов. */
 @SpringBootApplication
 public class PersonHomeWorkApplication {
-    /* Метод main запускает приложение, используя SpringApplication.run().
-     * @param args параметры командной строки*/
+
     public static void main(String[] args) {
         SpringApplication.run(PersonHomeWorkApplication.class, args);
     }
+
 }
