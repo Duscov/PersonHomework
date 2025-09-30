@@ -1,23 +1,27 @@
 package cohort_65.java.personhomework.person.service;
 
 import cohort_65.java.personhomework.person.dao.PersonRepository;
-import cohort_65.java.personhomework.person.dto.AddressDto;
-import cohort_65.java.personhomework.person.dto.CityPopulationDto;
-import cohort_65.java.personhomework.person.dto.PersonDto;
+import cohort_65.java.personhomework.person.dto.*;
 import cohort_65.java.personhomework.person.dto.exception.PersonNotFoundException;
 import cohort_65.java.personhomework.person.model.Address;
+import cohort_65.java.personhomework.person.model.Child;
+import cohort_65.java.personhomework.person.model.Employee;
 import cohort_65.java.personhomework.person.model.Person;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
 @Service
-@RequiredArgsConstructor
-public class PersonServiceImpl implements PersonService {
+public class PersonServiceImpl implements PersonService, CommandLineRunner {
 
     final PersonRepository personRepository;
     final ModelMapper modelMapper;
+    public PersonServiceImpl(PersonRepository personRepository, ModelMapper modelMapper) {
+        this.personRepository = personRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public boolean addPerson(PersonDto personDto) {
@@ -90,5 +94,36 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Iterable<CityPopulationDto> getCityPopulation() {
         return personRepository.getCityPopulation();
+    }
+
+    @Override
+    public Iterable<EmployeeDto> findEmployeeBySalary(Integer min, Integer max) {
+        return personRepository.findEmployeesBySalaryBetween(min, max).stream()
+                .map(e -> modelMapper.map(e, EmployeeDto.class))
+                .toList();
+    }
+
+
+    @Override
+    public Iterable<ChildDto> findAllChildren() {
+        return personRepository.findAllChildren().stream()
+                .map(c -> modelMapper.map(c, ChildDto.class))
+                .toList();
+    }
+
+
+    @Override
+    public void run(String... args) throws Exception {
+        if(personRepository.count() == 0) {
+            Person person = new Person(1000, "John", LocalDate.now().minusYears(20),
+                    new Address("Berlin", "KantStr", 33));
+            Child child = new Child(2000, "Peter", LocalDate.now().minusYears(5),
+                    new Address("Berlin", "KanStr", 33), "Kindergarten");
+            Employee employee = new Employee (3000, "Karl", LocalDate.now().minusYears(30),
+                    new Address("Berlin", "KantStr", 63), "Apple", 8000);
+            personRepository.save(person);
+            personRepository.save(child);
+            personRepository.save(employee);
+        }
     }
 }
