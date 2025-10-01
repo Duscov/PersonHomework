@@ -1,7 +1,6 @@
 package cohort_65.java.personhomework.person.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -11,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
     @Id
     Integer id;

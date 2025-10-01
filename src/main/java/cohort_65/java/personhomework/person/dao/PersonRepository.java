@@ -1,5 +1,6 @@
 package cohort_65.java.personhomework.person.dao;
 
+import cohort_65.java.personhomework.person.dto.ChildDto;
 import cohort_65.java.personhomework.person.dto.CityPopulationDto;
 import cohort_65.java.personhomework.person.model.Child;
 import cohort_65.java.personhomework.person.model.Employee;
@@ -21,9 +22,7 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
             "FROM Person p GROUP BY p.address.city")
     List<CityPopulationDto> getCityPopulation();
 
-    @Query("SELECT e FROM Employee e WHERE e.salary BETWEEN :min AND :max")
-    List<Employee> findEmployeesBySalaryBetween(Integer min, Integer max);
+    List<Employee> findBySalaryBetween(Integer min, Integer max);
 
-    @Query("SELECT c FROM Child c")
-    List<Child> findAllChildren();
+    List<Child> findChildBy();
 }
