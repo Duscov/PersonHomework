@@ -2,7 +2,9 @@ package cohort_65.java.personhomework.person.dto;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -13,6 +15,8 @@ import java.time.LocalDate;
         @JsonSubTypes.Type(name = "child", value = ChildDto.class),
         @JsonSubTypes.Type(name = "person", value = PersonDto.class)
 })
+@NoArgsConstructor
+@AllArgsConstructor
 public class PersonDto {
     Integer id;
     String name;
